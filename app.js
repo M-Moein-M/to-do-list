@@ -1,12 +1,17 @@
 let taskInput = document.querySelector('.task-input');
 const allTasksDiv = document.querySelector('.tasks');
 
+let doneTasks;  // this is a sort of boolean mask array for keep track of tasks that are marked as done 0 means not done, 1 means done
 let allTasksArray;
-if (JSON.parse(localStorage.getItem('allTasks')) === null) {
+if (JSON.parse(localStorage.getItem('allTasks')) === null)
     allTasksArray = [];
-} else {
+else
     allTasksArray = JSON.parse(localStorage.getItem('allTasks'));
-}
+
+if (JSON.parse(localStorage.getItem('doneTasks')) === null)
+    doneTasks = [];
+else
+    doneTasks = JSON.parse(localStorage.getItem('doneTasks'));
 
 
 loadTaskList();
@@ -15,6 +20,7 @@ document.querySelector('.add-task').addEventListener('click', addTask);
 document.querySelector('.task-input').addEventListener('keypress', checkEnterPress);
 window.addEventListener('beforeunload', function () {
     localStorage.setItem('allTasks', JSON.stringify(allTasksArray));
+    localStorage.setItem('doneTasks', JSON.stringify(doneTasks));
 })
 
 function checkEnterPress(event) {
@@ -39,6 +45,7 @@ function addTask() {
 
     } else {  // adding new task to the list
         allTasksArray.splice(allTasksArray.length, 0, task);
+        doneTasks.splice(doneTasks.length, 0, 0);  // add 0 to the end of array as it's a 'not done' task
         loadTaskList();
     }
 
@@ -53,11 +60,14 @@ function allTaskDivRemoveAllChild() {
 function removeTask() {
     let taskIndex = this.parentNode.id;
     allTasksArray.splice(taskIndex, 1);
+    doneTasks.splice(taskIndex, 1);
     loadTaskList();
 }
 
-function ckeckDoneTask() {
+function ckeckDoneTask() { /// mark a task as done
     this.parentNode.classList.toggle('done-task');
+    let doneTaskId = this.parentNode.id;
+    doneTasks[doneTaskId] = 1;
 }
 
 function loadTaskList() {
@@ -81,5 +91,10 @@ function loadTaskList() {
         pElement.appendChild(doneBtn);
 
         allTasksDiv.appendChild(pElement);
+
+        if (doneTasks[i] === 1){
+            pElement.classList.add('done-task');
+        }
+
     }
 }
