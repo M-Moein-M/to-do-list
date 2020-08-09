@@ -67,7 +67,11 @@ function removeTask() {
 function ckeckDoneTask() { /// mark a task as done
     this.parentNode.classList.toggle('done-task');
     let doneTaskId = parseInt(this.parentNode.id);
-    doneTasks[doneTaskId] = 1;
+    if (doneTasks[doneTaskId] === 1)
+        doneTasks[doneTaskId] = 0;
+    else
+        doneTasks[doneTaskId] = 1;
+
 }
 
 function moveTaskUp() {
