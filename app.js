@@ -58,7 +58,7 @@ function allTaskDivRemoveAllChild() {
 }
 
 function removeTask() {
-    let taskIndex = this.parentNode.id;
+    let taskIndex = parseInt(this.parentNode.id);
     allTasksArray.splice(taskIndex, 1);
     doneTasks.splice(taskIndex, 1);
     loadTaskList();
@@ -66,8 +66,37 @@ function removeTask() {
 
 function ckeckDoneTask() { /// mark a task as done
     this.parentNode.classList.toggle('done-task');
-    let doneTaskId = this.parentNode.id;
+    let doneTaskId = parseInt(this.parentNode.id);
     doneTasks[doneTaskId] = 1;
+}
+
+function moveTaskUp() {
+    let taskIndex = parseInt(this.parentNode.id);  // determines task that user wants to move up
+    if (taskIndex <= 0){
+        //do nothing beacause user wants to move up the 1st task
+    }else{
+        swap(taskIndex, taskIndex-1, allTasksArray);
+        swap(taskIndex, taskIndex-1, doneTasks);
+    }
+    loadTaskList();
+}
+
+function moveTaskDown() {
+    let taskIndex = parseInt(this.parentNode.id);  // determines task that user wants to move down
+    if (taskIndex >= allTasksArray.length - 1){
+        //do nothing beacause user wants to move down the last task
+    }else{
+        swap(taskIndex, taskIndex+1, allTasksArray);
+        swap(taskIndex, taskIndex+1, doneTasks);
+    }
+    loadTaskList();
+
+}
+
+function swap(i, j, array) {
+    let temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
 }
 
 function loadTaskList() {
@@ -89,9 +118,20 @@ function loadTaskList() {
         doneBtn.classList.add('task-button');
         doneBtn.addEventListener('click', ckeckDoneTask);
         pElement.appendChild(doneBtn);
+        
+        let upBtn = document.createElement('button');
+        upBtn.classList.add('up-button');
+        upBtn.classList.add('task-button');
+        upBtn.addEventListener('click', moveTaskUp);
+        pElement.appendChild(upBtn);
+
+        let downBtn = document.createElement('button');
+        downBtn.classList.add('down-button');
+        downBtn.classList.add('task-button');
+        downBtn.addEventListener('click', moveTaskDown);
+        pElement.appendChild(downBtn);
 
         allTasksDiv.appendChild(pElement);
-
         if (doneTasks[i] === 1){
             pElement.classList.add('done-task');
         }
