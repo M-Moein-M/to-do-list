@@ -1,12 +1,21 @@
 let taskInput = document.querySelector('.task-input');
 const allTasksDiv = document.querySelector('.tasks');
 
-let allTasksArray = ['take shower', 'read 30 minutes', 'call Joe'];
+let allTasksArray;
+if (JSON.parse(localStorage.getItem('allTasks')) === null) {
+    allTasksArray = [];
+} else {
+    allTasksArray = JSON.parse(localStorage.getItem('allTasks'));
+}
+
 
 loadTaskList();
 
 document.querySelector('.add-task').addEventListener('click', addTask);
 document.querySelector('.task-input').addEventListener('keypress', checkEnterPress);
+window.addEventListener('beforeunload', function () {
+    localStorage.setItem('allTasks', JSON.stringify(allTasksArray));
+})
 
 function checkEnterPress(event) {
     if (event.code == 'Enter')
@@ -14,6 +23,7 @@ function checkEnterPress(event) {
 }
 
 function addTask() {
+
     let task = taskInput.value;
     taskInput.value = '';  // we make the input box empty
     if (task === '') {
@@ -51,27 +61,24 @@ function ckeckDoneTask() {
 }
 
 function loadTaskList() {
-    allTaskDivRemoveAllChild();
+    allTaskDivRemoveAllChild();   // we clear all the children of the main division tag(.task)
     for (let i = 0; i < allTasksArray.length; i++) {
         let pElement = document.createElement('p');
         pElement.classList.add('task');
         pElement.innerHTML = (i + 1).toString() + '. ' + allTasksArray[i];
         pElement.id = i.toString();
 
-        let doneBtn = document.createElement('button');
-        doneBtn.classList.add('done-button');
-        doneBtn.classList.add('task-button');
-        doneBtn.addEventListener('click', ckeckDoneTask);
-
-        pElement.appendChild(doneBtn);
-
-
         let removeBtn = document.createElement('button');
         removeBtn.classList.add('remove-button');
         removeBtn.classList.add('task-button');
         removeBtn.addEventListener('click', removeTask);
-
         pElement.appendChild(removeBtn);
+
+        let doneBtn = document.createElement('button');
+        doneBtn.classList.add('done-button');
+        doneBtn.classList.add('task-button');
+        doneBtn.addEventListener('click', ckeckDoneTask);
+        pElement.appendChild(doneBtn);
 
         allTasksDiv.appendChild(pElement);
     }
