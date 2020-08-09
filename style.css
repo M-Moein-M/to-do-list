@@ -39,6 +39,26 @@ body{
     width: 600px;
 }
 .tasks p:hover{
-    transform: scale(1.1);
+    background-color: #42ccf7;
 }
 
+.task-button{
+    cursor: pointer;
+    float: right;
+    border: none;
+    border-radius: 3px;
+    width: 30px;
+    height: 30px;
+}
+
+
+.remove-button{
+    background-image: url("assets/x-circle-fill.svg");
+    background-size: cover ;
+    background-position: center;
+    transition-duration: 0.2s;
+}
+.remove-button:hover{
+    background-size: 120% ;
+
+}

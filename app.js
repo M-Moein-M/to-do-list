@@ -18,16 +18,16 @@ function addTask() {
     taskInput.value = '';  // we make the input box empty
     if (task === '') {
         // console.log("no task written to the input");
-    } else if (allTasksArray.includes(task)){
+    } else if (allTasksArray.includes(task)) {
         let duplicateIndex = allTasksArray.indexOf(task);
         let duplicaateElement = allTasksDiv.children[duplicateIndex];
         duplicaateElement.style.setProperty('border', '3px red solid');
         setTimeout(function () {
-            window.alert('Duplicate Task with taks number '+(duplicateIndex+1).toString());
+            window.alert('Duplicate Task with taks number ' + (duplicateIndex + 1).toString());
             duplicaateElement.style.setProperty('border', '1px #4b4bff solid');
         }, 100);
 
-    } else {
+    } else {  // adding new task to the list
         allTasksArray.splice(allTasksArray.length, 0, task);
         loadTaskList();
     }
@@ -40,12 +40,27 @@ function allTaskDivRemoveAllChild() {
     }
 }
 
+function removeTask() {
+    let taskIndex = this.parentNode.id;
+    allTasksArray.splice(taskIndex, 1);
+    loadTaskList();
+}
+
 function loadTaskList() {
     allTaskDivRemoveAllChild();
     for (let i = 0; i < allTasksArray.length; i++) {
         let pElement = document.createElement('p');
         pElement.classList.add('task');
         pElement.innerHTML = (i + 1).toString() + '. ' + allTasksArray[i];
+        pElement.id = i.toString();
+
+        let removeBtn = document.createElement('button');
+        removeBtn.classList.add('remove-button');
+        removeBtn.classList.add('task-button');
+        removeBtn.addEventListener('click', removeTask);
+
+        pElement.appendChild(removeBtn);
+
         allTasksDiv.appendChild(pElement);
     }
 }
