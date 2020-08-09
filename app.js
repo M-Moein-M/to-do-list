@@ -46,6 +46,10 @@ function removeTask() {
     loadTaskList();
 }
 
+function ckeckDoneTask() {
+    this.parentNode.classList.toggle('done-task');
+}
+
 function loadTaskList() {
     allTaskDivRemoveAllChild();
     for (let i = 0; i < allTasksArray.length; i++) {
@@ -53,6 +57,14 @@ function loadTaskList() {
         pElement.classList.add('task');
         pElement.innerHTML = (i + 1).toString() + '. ' + allTasksArray[i];
         pElement.id = i.toString();
+
+        let doneBtn = document.createElement('button');
+        doneBtn.classList.add('done-button');
+        doneBtn.classList.add('task-button');
+        doneBtn.addEventListener('click', ckeckDoneTask);
+
+        pElement.appendChild(doneBtn);
+
 
         let removeBtn = document.createElement('button');
         removeBtn.classList.add('remove-button');
