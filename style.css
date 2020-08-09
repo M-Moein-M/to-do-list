@@ -1,19 +1,19 @@
-*{
+* {
     font-family: "Century Gothic";
     font-size: 110%;
 }
 
-body{
+body {
     background-color: #aedfee;
 }
 
-.task-input, .add-task{
+.task-input, .add-task {
     border: none;
     border-radius: 3px;
     height: 50px;
 }
 
-.add-task{
+.add-task {
     background-color: #434e55;
     cursor: pointer;
     color: #42ccf7;
@@ -22,7 +22,7 @@ body{
     margin-right: 15px;
 }
 
-.task-input{
+.task-input {
     margin-top: 50px;
     margin-bottom: 10px;
     text-align: center;
@@ -30,52 +30,69 @@ body{
     width: 100%;
 }
 
-
-.tasks p{
+.tasks p {
     margin: 40px 0;
+    height: 80px;
     transition-duration: 0.2s;
-    border: 1px #4b4bff solid ; /*this color is used in app.js when user inputs a duplicate task so dont change this*/
+    border: 1px #4b4bff solid; /*this color is used in app.js when user inputs a duplicate task so dont change this*/
     border-radius: 5px;
     padding: 5px 30px;
     width: 100%;
 }
-.tasks p:hover{
+
+.tasks p:hover {
     background-color: #42ccf7;
 }
 
-.task-button{
+.task-button {
     cursor: pointer;
     float: right;
     border: none;
     border-radius: 3px;
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     margin-left: 5px;
     margin-top: 5px;
-    background-size: cover ;
+    background-size: cover;
     background-position: center;
     transition-duration: 0.1s;
 }
-.task-button:hover{
+
+.task-button:hover {
     transform: scale(1.2);
 }
-.remove-button{
+
+.remove-button {
     background-image: url("assets/x-circle-fill.svg");
 }
 
-.done-button{
+.done-button {
     background-image: url("assets/check-circle-fill.svg");
 }
-.up-button{
+
+.up-button {
     background-image: url("assets/arrow-up.svg");
 }
 
-.down-button{
+.down-button {
     background-image: url("assets/arrow-down.svg");
 }
 
+.edit-button {
+    background-image: url("assets/pencil.svg");
+}
 
-.done-task{
+
+.done-task {
     text-decoration-line: line-through;
 }
 
+/*changing modal*/
+#edit-modal-input {
+    font-size: 90%;
+    width: 100%;
+}
+
+.hide {
+    display: none;
+}
